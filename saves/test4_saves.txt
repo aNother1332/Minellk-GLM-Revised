@@ -1,0 +1,23 @@
+存档开始
+用户名：test4
+存档时间：Mon Jun 01 22:40:23 CST 2026
+分数：570
+剩余时间：42
+难度：2
+道具点数：12
+剩余棋子数：0
+棋盘状态：
+0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true
+0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true
+0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true
+0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true
+0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true
+0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true
+0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true
+0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true
+0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true
+0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true
+0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true
+0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true,0:true
+存档哈希值：db4eedeb5fcfda11449bc5051c5b7198
+存档结束
