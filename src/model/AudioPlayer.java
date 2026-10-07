@@ -16,7 +16,7 @@ public class AudioPlayer {
 
     private static boolean music=false;
 
-    // 程序启动时预加载所有音频
+    // 程序启动时预加载所有音频，并应用本地设置中的音量
     static {
         try {
             background=load(backgroundpath);
@@ -24,6 +24,9 @@ public class AudioPlayer {
             combo=load(combopath);
         } catch (Exception e) {
         }
+        Settings.load();
+        setMusicVolume(Settings.getMusicVolume());
+        setSfxVolume(Settings.getSfxVolume());
     }
 
     // 加载音频工具方法（只预加载调用）
@@ -43,6 +46,40 @@ public class AudioPlayer {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    /** 将线性音量（0.0–1.0）应用到 Clip 的主增益 */
+    private static void applyGain(Clip clip, double volume) {
+        if (clip == null) {
+            return;
+        }
+        try {
+            FloatControl gain = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            double linear = Math.max(volume, 0.0001);
+            float db = (float) (20 * Math.log10(linear));
+            if (db < gain.getMinimum()) {
+                db = gain.getMinimum();
+            }
+            if (db > gain.getMaximum()) {
+                db = gain.getMaximum();
+            }
+            gain.setValue(db);
+        } catch (Exception ignored) {
+            // 个别音频设备不支持主增益控制时忽略
+        }
+    }
+
+    /** 设置背景音乐音量（0.0–1.0）并持久化 */
+    public static void setMusicVolume(double volume) {
+        applyGain(background, volume);
+        Settings.setMusicVolume(volume);
+    }
+
+    /** 设置音效音量（0.0–1.0）并持久化 */
+    public static void setSfxVolume(double volume) {
+        applyGain(hit, volume);
+        applyGain(combo, volume);
+        Settings.setSfxVolume(volume);
     }
 
     // 背景音乐

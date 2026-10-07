@@ -1,5 +1,4 @@
 package model;
-import ui.ItemPanel;
 
 import java.util.Date;
 
@@ -9,32 +8,36 @@ public class Record {
     private int score;
     private int lefttime;
     private int difficulty;
-    private Cell[][]board;
+    private Cell[][] board;
     private int remaincount;
     private String checksum;
     private int points;
 
-    public Record(String username,int score,int lefttime,int difficulty,Cell[][]board,int remaincount){
-        this.username=username;
-        this.savetime =new Date();
-        this.score=score;
+    //没有校验和，用于保存当前进度（胜利、失败或关闭窗口时）
+    public Record(String username, int score, int lefttime, int difficulty, Cell[][] board, int remaincount, int points) {
+        this.username = username;
+        this.savetime = new Date();
+        this.score = score;
         this.lefttime = lefttime;
-        this.difficulty=difficulty;
+        this.difficulty = difficulty;
         this.board = board;
         this.remaincount = remaincount;
+        this.points = points;
+    }
 
-    }//没有校验和，用于第一次创建存档
-    public Record(String username, int score, int lefttime, int difficulty, Cell[][]board, int remaincount, String checksum,int points){
-        this.username=username;
-        this.savetime=new Date();
-        this.score=score;
-        this.lefttime=lefttime;
-        this.difficulty=difficulty;
-        this.board=board;
+    //有校验和，用于从文本存档恢复
+    public Record(String username, int score, int lefttime, int difficulty, Cell[][] board, int remaincount, String checksum, int points) {
+        this.username = username;
+        this.savetime = new Date();
+        this.score = score;
+        this.lefttime = lefttime;
+        this.difficulty = difficulty;
+        this.board = board;
         this.remaincount = remaincount;
-        this.checksum=checksum;
-        this.points=points;
-    }//有校验和，用于保存存档
+        this.checksum = checksum;
+        this.points = points;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -63,6 +66,6 @@ public class Record {
         return difficulty;
     }
     public int getPoints() {
-        return ItemPanel.points;
+        return points;
     }
 }

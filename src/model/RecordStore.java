@@ -1,16 +1,11 @@
 package model;
-import ui.GameDifficulty;
-import ui.Dialog;
 
-import javax.swing.*;
 import java.io.*;
 import java.security.MessageDigest;//哈希算法
 import java.security.NoSuchAlgorithmException;//哈希算法的异常处理
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static ui.ItemPanel.points;
 
 public class RecordStore {
     private static final String savepath="saves/";
@@ -107,6 +102,7 @@ public class RecordStore {
         int level=1;
         String checksum="0";
         int remainingCells=0;
+        int itemPoints=0;
         List<String> boardrow=new ArrayList<>();
         String row;
         boolean reading=false;//reading代表开始读取棋盘
@@ -133,7 +129,7 @@ public class RecordStore {
                 checksum=row.substring("存档哈希值：".length());
             }
             else if(row.startsWith("道具点数：")) {
-                points=Integer.parseInt(row.substring("道具点数：".length()));
+                itemPoints=Integer.parseInt(row.substring("道具点数：".length()));
             }
             else if(row.startsWith("剩余棋子数：")) {
                 remainingCells=Integer.parseInt(row.substring("剩余棋子数：".length()));
@@ -147,31 +143,40 @@ public class RecordStore {
         }
         if (username!=null&&boardrow.isEmpty()==false&&checksum!=null){
             if (rightchecksum(checksum,username,score,timeLeft,level,remainingCells,boardrow)==false) {
-                new Dialog(null,  "警告：存档被篡改", 400,300);
+                tamperWarning=true;//不直接弹窗，由界面层读取该标记后提示
                 return null;
             }
             GameDifficulty difficulty=getdifficulty(level);
             Cell[][]board=recover(boardrow, difficulty);
-            return new Record(username,score,timeLeft,level,board,remainingCells,checksum,points);
+            return new Record(username,score,timeLeft,level,board,remainingCells,checksum,itemPoints);
         }
         return null;
     }
 
+    //存档校验失败时置位，由界面层在加载完成后 consume 并提示
+    private static boolean tamperWarning=false;
+    public static boolean consumeTamperWarning() {
+        boolean value=tamperWarning;
+        tamperWarning=false;
+        return value;
+    }
+
     private static GameDifficulty getdifficulty(int level) {
         if(level==1){return GameDifficulty.EASY;}
+        else if(level==3){return GameDifficulty.ENDLESS;}
         else{return GameDifficulty.HARD;}
     }
 
     private static Cell[][] recover(List<String> a,GameDifficulty difficulty) {
         int row;
         int col;
-        if(difficulty==GameDifficulty.EASY){
-            row=11;
-            col=11;
-        }
-        else{
+        if(difficulty==GameDifficulty.HARD){
             row=12;
             col=12;
+        }
+        else{
+            row=11;
+            col=11;
         }
         Cell[][] board=new Cell[row][col];
         for (int i=0;i<Math.min(a.size(),row); i++){//取小，防止篡改棋盘大小导致越界崩溃

@@ -32,4 +32,10 @@ public class Cell implements Serializable {
         isEmpty=empty;
         number=0;
     }
+
+    /** 洗牌/补充棋子用：设置图标编号并恢复为非空 */
+    public void setNumber(int number) {
+        this.number=number;
+        this.isEmpty=false;
+    }
 }

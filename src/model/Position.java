@@ -26,4 +26,9 @@ public class Position implements Serializable {
         }
         else{return false;}
     }
+
+    @Override
+    public int hashCode() {//与equals配套：等值的Position必须等哈希，否则HashMap按值查找会失败
+        return 31*row+col;
+    }
 }
