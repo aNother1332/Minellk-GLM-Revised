@@ -6,3 +6,5 @@ screenshots
 sources.txt
 settings.txt
 .zcodeignore
+build
+dist

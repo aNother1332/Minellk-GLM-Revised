@@ -84,6 +84,9 @@ public class AudioPlayer {
 
     // 背景音乐
     public static void backgroundsound() {
+        if (background == null) {
+            return; // 音频设备或解码器不可用时静默跳过
+        }
         if(music==false){
         music=true;
         background.setFramePosition(0);
@@ -99,6 +102,9 @@ public class AudioPlayer {
     }
     // 消除音效
     public static void hitsound() {
+        if (hit == null) {
+            return;
+        }
         hit.stop();
         hit.setFramePosition(0);
         hit.start();
@@ -106,6 +112,9 @@ public class AudioPlayer {
 
     // 连击音效
     public static void combosound() {
+        if (combo == null) {
+            return;
+        }
         combo.stop();
         combo.setFramePosition(0);
         combo.start();
